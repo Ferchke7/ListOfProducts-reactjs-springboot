@@ -1,0 +1,160 @@
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+}
+
+.text-center {
+  text-align: center;
+}
+
+#login-page {
+  color: #2a2a2a;
+  @media(min-width:768px) {
+    padding: 20px;
+  }
+
+  .form {
+    background: #fff;
+    border-radius: 4px;
+    width: 100%;
+    margin: 0 auto;
+    @media(min-width:768px) {
+      width: 60%;
+    }
+    @media(min-width:992px) {
+      width: 40%;
+    }
+
+    &__tabs {
+      display: flex;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+
+      .tab {
+        // Flex rules
+        display: flex;
+        flex: 2;
+        justify-content: center;
+        text-align: center;
+        text-decoration: none;
+        // Styling
+        font-size: 18px;
+        font-weight: 500;
+        background: #f2f2f2;
+        padding: 12px 14px;
+        border-bottom: 5px solid #e5e5e5;
+        color: #939393;
+        // Transition delay
+        transition-delay: 0.1s;
+        @media(min-width:768px) {
+          font-size: 20px;
+        }
+        // Round top left and right
+        &:first-child {
+          border-top-left-radius: 4px;
+        }
+
+        &:last-child {
+          border-top-right-radius: 4px;
+        }
+        // Active styles
+        &.active {
+          background: #fff;
+          color: #2a2a2a;
+          border-color: black;
+          transition: 0.3s;
+        }
+      }
+    }
+
+    &__content {
+      padding: 0 20px 20px;
+      // Styling for each form container
+      .form-variant {
+        display: none;
+        transition: 0.5s;
+        @media(min-width:768px) {
+          padding: 0 50px 50px;
+        }
+        // Active form
+        &.active {
+          display: block;
+        }
+        // Input group styles
+        .input-group {
+          position: relative;
+          // Label styles
+          label {
+            color: black;
+            padding: 6px 0;
+            display: block;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 500;
+          }
+          // Actual input field
+          .input-field {
+            display: block;
+            width: calc(100% - 59px);
+            @media(min-width:768px) {
+              width: calc(100% - 53px);
+            }
+            height: 40px;
+            padding-left: 50px;
+            margin-bottom: 6px;
+            border: 1px solid black;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            font-size:1em;
+            border-radius: 0 !important;
+            // Remove nasty outlline on focus
+            &:focus {
+              outline: none;
+              border-bottom-width: 5px;
+            }
+            // Submit input styles
+            &--submit {
+              width: 100%;
+              border-radius: 0;
+              background: black;
+              color: #fff;
+              border: none;
+              margin-top: 12px;
+              padding: 0;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+            }
+          }
+          // Icon styles
+          .input-icon {
+            position: absolute;
+            top: 20px;
+            left: 5px;
+            @media(min-width:768px) {
+              top:18px;
+            }
+            width: 30px;
+            height: 30px;
+          }
+        }
+        // Remove nasty yellow background to autofilled inputs
+        input:-webkit-autofill {
+          -webkit-box-shadow: 0 0 0 30px white inset;
+        }
+        // Forgot password link
+        .forgot-link {
+          display: block;
+          margin-top: 12px;
+          color: black;
+          text-align: center;
+          text-decoration: none;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
