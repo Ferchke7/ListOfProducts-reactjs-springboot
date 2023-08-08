@@ -1,52 +1,15 @@
-import * as React from 'react';
-import '../style/logStyle.scss'
+import * as React from "react";
 
-export default class LoginForm extends React.Component {
-
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeTab: 'signup',
-            firstName: "",
-            lastName: "",
-            login: "",
-            password: "",
-            onLogin: props.onLogin,
-            onRegister: props.onRegister
-        };
-    };
-
-    handleTabClick = (tabId) => {
-        this.setState({activeTab: tabId});
-    };
-
-    onChangeHandler = (event) => {
-        let name = event.target.name;
-        let value = event.target.value;
-        this.setState({[name]: value});
-    };
-
-    onSubmitLogin = (e) => {
-        this.state.onLogin(e, this.state.login, this.state.password);
-    };
-
-    onSubmitRegister = (e) => {
-        this.state.onRegister(e, this.state.firstName, this.state.lastName, this.state.login, this.state.password);
-    };
-
-
-
-
+export default class LoginContent extends React.Component {
     render() {
 
-            return (
+        return (
             <div className="wrapper" id="login-page">
 
                 <div className="form">
 
                     <div className="form__tabs">
-                        <a href="#" onClick={() => this.handleTabClick('signup')} data-target="signup"
+                        <a href="#" data-target="signup"
                            className="tab active">Signup</a>
                         <a href="#" data-target="login" className="tab">Login</a>
                     </div>
