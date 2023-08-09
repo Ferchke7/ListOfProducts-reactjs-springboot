@@ -1,5 +1,10 @@
 import * as React from 'react';
-import '../../style/logStyle.scss'
+
+import SignLoginButtons from "./SignLoginButtons";
+import SignupContent from "./SignupContent";
+import ForgotPassword from "./ForgotPassword";
+import LoginContent from "./LoginContent";
+
 
 export default class LoginForm extends React.Component {
 
@@ -7,7 +12,7 @@ export default class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeTab: 'signup',
+            componentToShow: 'signup',
             firstName: "",
             lastName: "",
             login: "",
@@ -35,15 +40,36 @@ export default class LoginForm extends React.Component {
         this.state.onRegister(e, this.state.firstName, this.state.lastName, this.state.login, this.state.password);
     };
 
+    showLogin = () => {
+        this.setState({ componentToShow: "login" });
+    };
 
+    showSignup = () => {
+        this.setState({ componentToShow: "signup" });
+    };
 
+    showForgot = () => {
+        this.setState({ componentToShow: "forgotPassword" });
+    };
 
     render() {
+        return (
+            <>
+                <SignLoginButtons
+                    Login={this.showLogin}
+                    signup={this.showSignup}
+                    forgotPassword={this.showForgot}
+                />
 
-           return (
-               <>
-               </>
-           )
-
+                {this.state.componentToShow === "signup" && <SignupContent />}
+                {this.state.componentToShow === "login" && (
+                    <LoginContent
+                        onLogin={this.onSubmitLogin} // Changed from this.onLogin
+                        onRegister={this.onSubmitRegister} // Changed from this.onRegister
+                    />
+                )}
+                {this.state.componentToShow === "forgotPassword" && <ForgotPassword />}
+            </>
+        )
     }
 }
