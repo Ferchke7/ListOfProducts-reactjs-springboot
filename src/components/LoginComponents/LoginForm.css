@@ -3,26 +3,31 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
+
 }
 
 .title {
+
     text-align: center;
-    width: 30vw;
-    background-color: rgb(190, 164, 214);
+    max-width: 30vw; /* Set a maximum width for the title */
+    background-color: black;
     padding: 2vw 1vw;
     border-radius: 10px 10px 0 0;
     font-size: 2rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+
 }
 
-.App {
+.RegForm {
     text-align: center;
     display: flex;
     flex-direction: column;
     margin: auto;
     width: 30vw;
     padding: 2vw 1vw;
-    background-color: rgb(250, 194, 194);
+    background-color: black;
     border-radius: 0 0 10px 10px;
 }
 
@@ -32,4 +37,8 @@ input {
     padding: 1vw 1vw;
     outline: none;
     margin: 5px;
+}
+
+input[type="submit"] {
+    background-color: white;
 }
