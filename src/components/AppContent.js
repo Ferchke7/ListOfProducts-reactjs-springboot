@@ -4,6 +4,7 @@ import {request, setAuthHeader} from "../axiosFile/axios_helper";
 import Buttons from './Buttons';
 import AuthContent from './AuthContent';
 import LoginForm from './LoginComponents/LoginForm';
+import ListOfProducts from "./ListOfProducts";
 export default class AppContent extends React.Component {
 
     constructor(props) {
@@ -72,7 +73,7 @@ export default class AppContent extends React.Component {
                     logout={this.logout}
                 />
 
-
+                {this.state.componentToShow === "welcome" && <ListOfProducts />}
                 {this.state.componentToShow === "login" && <LoginForm onLogin={this.onLogin} onRegister={this.onRegister} />}
                 {this.state.componentToShow === "messages" && <AuthContent />}
 
