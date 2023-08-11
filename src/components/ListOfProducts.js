@@ -5,11 +5,14 @@ import './ListOfProducts.css'
 import data from "bootstrap/js/src/dom/data";
 import {Table} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css'
+import LoginForm from "./LoginComponents/LoginForm";
+import ProductInfo from "./ProductInfo";
 class ListOfProducts extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: []
+            products: [],
+            productToShow: "none"
         };
     }
 
@@ -32,6 +35,9 @@ class ListOfProducts extends Component {
             }
         );
     }
+    handleProductClick = (product) => {
+        this.state({ productToShow: product})
+    }
 
     render() {
         console.log(this.state.products)
@@ -52,7 +58,8 @@ class ListOfProducts extends Component {
                                 <tbody>
                                 {this.state.products.map((product, index) => (
                                     <tr key={index}>
-                                        <td>{product.name}</td>
+                                        {/*TODO Change this for detailed Product*/}
+                                        <td onClick={this.handleProductClick(product.name)}>{product.name}</td>
                                         <td>${product.price}</td>
                                     </tr>
                                 ))}
