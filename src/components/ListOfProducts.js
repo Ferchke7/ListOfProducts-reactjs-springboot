@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import {setAuthHeader , request} from "../axiosFile/axios_helper";
-
-
+import './ListOfProducts.css'
+import data from "bootstrap/js/src/dom/data";
+import {Table} from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.css'
 class ListOfProducts extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +34,7 @@ class ListOfProducts extends Component {
     }
 
     render() {
+        console.log(this.state.products)
         return (
             <div className="row justify-content-md-center">
                 <div className="col-4">
@@ -39,13 +42,22 @@ class ListOfProducts extends Component {
                         <div className="card-body">
                             <h5 className="card-title">List of Products</h5>
                             <p className="card-text">Content:</p>
-                            <ListGroup>
+                            <Table stripped bordered hover size={"sm"}>
+                                <thead>
+                                <tr>
+                                    <th width={"170"}>Name of Product</th>
+                                    <th width={"170"}>Price</th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 {this.state.products.map((product, index) => (
-                                    <ListGroup.Item key={index}>
-                                        {product.name} - ${product.price.toFixed(2)}
-                                    </ListGroup.Item>
+                                    <tr key={index}>
+                                        <td>{product.name}</td>
+                                        <td>${product.price}</td>
+                                    </tr>
                                 ))}
-                            </ListGroup>
+                                </tbody>
+                            </Table>
                         </div>
                     </div>
                 </div>
