@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
 import {setAuthHeader , request} from "../axiosFile/axios_helper";
 import './ListOfProducts.css'
-import data from "bootstrap/js/src/dom/data";
 import {Table} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css'
-import LoginForm from "./LoginComponents/LoginForm";
-import ProductInfo from "./ProductInfo";
+
 class ListOfProducts extends Component {
     constructor(props) {
         super(props);
@@ -59,7 +56,7 @@ class ListOfProducts extends Component {
                                 {this.state.products.map((product, index) => (
                                     <tr key={index}>
                                         {/*TODO Change this for detailed Product*/}
-                                        <td onClick={this.handleProductClick(product.name)}>{product.name}</td>
+                                        <td>{product.name}</td>
                                         <td>${product.price}</td>
                                     </tr>
                                 ))}
