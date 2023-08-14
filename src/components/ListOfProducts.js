@@ -41,13 +41,14 @@ class ListOfProducts extends Component {
         return (
             <div className="row justify-content-md-center">
                 <div>
-                    <div className="card" style={{ width: "18rem" }}>
+                    <div className="card w-100">
                         <div className="card-body">
                             <h5 className="card-title">List of Products</h5>
-                            <p className="card-text">Content:</p>
+                            <p className="card-text">Products:</p>
                             <Table stripped bordered hover size={"sm"}>
                                 <thead>
                                 <tr>
+                                    <th width={"170"}>Name of Product</th>
                                     <th width={"170"}>Name of Product</th>
                                     <th width={"170"}>Price</th>
                                 </tr>
@@ -56,8 +57,12 @@ class ListOfProducts extends Component {
                                 {this.state.products.map((product, index) => (
                                     <tr key={index}>
                                         {/*TODO Change this for detailed Product*/}
+                                        <td>
+                                            <img src={product.imageUrl} alt={product.name} style={{ width: '100px', height: '100px' }} />
+                                        </td>
                                         <td>{product.name}</td>
                                         <td>${product.price}</td>
+
                                     </tr>
                                 ))}
                                 </tbody>

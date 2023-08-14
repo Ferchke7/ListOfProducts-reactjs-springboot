@@ -10,7 +10,7 @@ body {
 .title {
 
     text-align: center;
-    max-width: 30vw; /* Set a maximum width for the title */
+    max-width: 100%; /* Allow the title to take up the full width when needed */
     background-color: black;
     padding: 2vw 1vw;
     border-radius: 10px 10px 0 0;
