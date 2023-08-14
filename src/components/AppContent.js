@@ -5,6 +5,8 @@ import Buttons from './Buttons';
 import AuthContent from './AuthContent';
 import LoginForm from './LoginComponents/LoginForm';
 import ListOfProducts from "./ListOfProducts";
+import CreateProducts from "./creatProduct/CreateProducts";
+
 export default class AppContent extends React.Component {
 
     constructor(props) {
@@ -17,6 +19,10 @@ export default class AppContent extends React.Component {
     login = () => {
         this.setState({componentToShow: "login"})
     };
+
+    createProduct = () => {
+        this.setState({componentToShow: "create"})
+    }
 
     logout = () => {
         this.setState({componentToShow: "welcome"})
@@ -71,12 +77,13 @@ export default class AppContent extends React.Component {
                 <Buttons
                     login={this.login}
                     logout={this.logout}
+                    create={this.createProduct}
                 />
 
                 {this.state.componentToShow === "welcome" && <ListOfProducts />}
                 {this.state.componentToShow === "login" && <LoginForm onLogin={this.onLogin} onRegister={this.onRegister} />}
                 {this.state.componentToShow === "messages" && <AuthContent />}
-
+                {this.state.componentToShow === "create" && <CreateProducts />}
             </>
         );
     };

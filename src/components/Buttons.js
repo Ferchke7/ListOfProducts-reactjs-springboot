@@ -9,6 +9,9 @@ export default function Buttons(props) {
                 <button className="btn btn-dark" style={{ margin: '10px' }} onClick={props.logout}>
                     Logout
                 </button>
+                <button className="btn btn-dark" style={{ margin: '10px' }} onClick={props.create}>
+                    Create Product
+                </button>
             </div>
         </div>
     );

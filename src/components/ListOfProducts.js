@@ -40,7 +40,7 @@ class ListOfProducts extends Component {
         console.log(this.state.products)
         return (
             <div className="row justify-content-md-center">
-                <div className="col-4">
+                <div>
                     <div className="card" style={{ width: "18rem" }}>
                         <div className="card-body">
                             <h5 className="card-title">List of Products</h5>
