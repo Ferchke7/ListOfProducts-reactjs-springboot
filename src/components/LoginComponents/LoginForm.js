@@ -11,42 +11,14 @@ export default function LoginForm({ onLogin, onRegister }) {
     } = useForm();
 
     const [active, setActive] = useState("login");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [login, setLogin] = useState("");
-    const [password, setPassword] = useState("");
 
-    const onChangeHandler = (event) => {
-        const { name, value } = event.target;
-        switch (name) {
-            case "firstName":
-                setFirstName(value);
-                break;
-            case "lastName":
-                setLastName(value);
-                break;
-            case "login":
-                setLogin(value);
-                break;
-            case "password":
-                setPassword(value);
-                break;
-            default:
-                break;
-        }
+    const switchToLogin = () => {
+        setActive("login");
     };
 
-    const onSubmitLogin = (e) => {
-        e.preventDefault();
-        onLogin(login, password);
+    const switchToRegister = () => {
+        setActive("register");
     };
-
-    const onSubmitRegister = (e) => {
-        e.preventDefault();
-        onRegister(firstName, lastName, login, password);
-    };
-        const onSubmit = (data) => console.log(data);
-
         return (
 
             <div className="row justify-content-center">
@@ -70,9 +42,9 @@ export default function LoginForm({ onLogin, onRegister }) {
                         {active === "login" && (
                         <div className={classNames("tab-pane", "fade", active === "login" ? "show active" : "")}
                              id="pills-login">
-                            <form onSubmit={onSubmitLogin}>
+                            <form onSubmit={onLogin}>
                                 <p className="title">Login</p>
-                                <form className="RegForm" onSubmit={handleSubmit(onSubmit)}>
+                                <form className="RegForm">
                                     <input type="text" {...register("name")} placeholder="Name" />
 
                                     <input type="password" {...register("password")} placeholder="Password" />
@@ -84,18 +56,18 @@ export default function LoginForm({ onLogin, onRegister }) {
                         {active === "register" && (
                         <div className={classNames("tab-pane", "fade", active === "register" ? "show active" : "")}
                              id="pills-register">
-                            <form onSubmit={onSubmitRegister}>
+                            <form>
                                 <div className="App">
 
                                     <p className="title">Registration Form</p>
 
-                                    <form className="RegForm" onSubmit={handleSubmit(onSubmit)}>
+                                    <form className="RegForm">
                                         <input type="text" {...register("name")} placeholder="Name" />
                                         <input
                                             type="email"
                                             {...register("email", { required: true })}
-                                            placeholder="Email"
-                                        />
+                                            placeholder="Email" />
+                                        <input type="text" {...register("login")} placeholder="Login" />
                                         <span style={{ color: "white" }} className="error-message">
                                             *Email* is mandatory
                                         </span>
