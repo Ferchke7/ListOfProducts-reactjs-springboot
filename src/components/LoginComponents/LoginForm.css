@@ -11,7 +11,7 @@ body {
 
     text-align: center;
     max-width: 100%; /* Allow the title to take up the full width when needed */
-    background-color: black;
+    background-color: blue;
     padding: 2vw 1vw;
     border-radius: 10px 10px 0 0;
     font-size: 2rem;
@@ -27,7 +27,7 @@ body {
     margin: auto;
     width: 30vw;
     padding: 2vw 1vw;
-    background-color: black;
+    background-color: blue;
     border-radius: 0 0 10px 10px;
 }
 

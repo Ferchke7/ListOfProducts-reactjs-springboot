@@ -1,15 +1,18 @@
 import * as React from "react";
-import {request, setAuthHeader, getAuthToken} from "../axiosFile/axios_helper";
+import {request, setAuthHeader} from "../axiosFile/axios_helper";
 import Buttons from './Buttons';
 
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import LoginForm from "./LoginComponents/LoginForm";
 
 
 
+
 export default function AppContent() {
+
     const [componentToShow, setComponentToShow] = useState("main");
-    const [isAuthenticated, setAuthentication] = useState(false)
+    const [isAdmin, setAdmin] = useState(false)
+    const [isAuthenticated, setAuthentication] = useState(false);
 
     const login = () => {
         setComponentToShow("login");
@@ -18,6 +21,7 @@ export default function AppContent() {
     const logout = () => {
         setComponentToShow("main");
         setAuthHeader(null);
+        setAuthentication(false);
     };
 
     const handleLogin = (login, password) => {
@@ -27,7 +31,7 @@ export default function AppContent() {
         })
             .then((response) => {
                 setAuthHeader(response.data.token);
-                setAuthentication(true)
+                setAuthentication(true);
                 setComponentToShow("authenticated");
             })
             .catch(() => {
@@ -52,92 +56,20 @@ export default function AppContent() {
                 setComponentToShow("main");
             });
     };
+
     return (
         <>
             <Buttons
                 login={login}
                 logout={logout}
+                isAuthenticated={isAuthenticated}
             />
             {componentToShow === "login" && (
                 <LoginForm onLogin={handleLogin} onRegister={handleRegister} />
             )}
-            {componentToShow === "main" && (
-                <p>It is main</p>
-            )}
-            {componentToShow === "authenticated" && (
-                <p>You've auth</p>
-            )}
-            {componentToShow === "registered" && (
-                <p>You've registered</p>
-            )}
+            {componentToShow === "main" && <p>It is main</p>}
+            {componentToShow === "authenticated" && <p>You've auth</p>}
+            {componentToShow === "registered" && <p>You've registered</p>}
         </>
     );
 }
-
-//
-// const [isAuthenticated, setIsAuthenticated] = useState(false);
-//     const [username, setUsername] = useState("");
-//     const [password, setPassword] = useState("");
-//     const [authMessage, setAuthMessage] = useState("");
-//
-//     useEffect(() => {
-//         if (isAuthenticated) {
-//             setComponentToShow("welcome");
-//         } else {
-//             setComponentToShow("");
-//         }
-//     }, [isAuthenticated]);
-//
-//     const createProduct = () => {
-//         setComponentToShow("create");
-//     };
-//
-//     const logout = () => {
-//         setAuthHeader(null);
-//         setIsAuthenticated(false);
-//         setAuthMessage("");
-//     };
-//
-//     const handleLogin = (username, password) => {
-//         request("POST", "/login", {
-//             login: username,
-//             password: password,
-//         })
-//             .then((response) => {
-//                 setAuthHeader(response.data.token);
-//                 setIsAuthenticated(true);
-//                 setUsername(username);
-//                 setPassword(password);
-//                 setAuthMessage(`Successfully entered username: ${username}`);
-//             })
-//             .catch((error) => {
-//                 console.error("Login error:", error);
-//                 setIsAuthenticated(false);
-//                 setUsername("");
-//                 setPassword("");
-//                 setAuthMessage("Failed to authenticate. No user found with that information.");
-//             });
-//     };
-//
-//     const handleRegister = (firstName, lastName, username, password) => {
-//         request("POST", "/register", {
-//             firstName: firstName,
-//             lastName: lastName,
-//             login: username,
-//             password: password,
-//         })
-//             .then((response) => {
-//                 setAuthHeader(response.data.token);
-//                 setIsAuthenticated(true);
-//                 setUsername(username);
-//                 setPassword(password);
-//                 setAuthMessage(`Successfully entered username: ${username}`);
-//             })
-//             .catch((error) => {
-//                 console.error("Registration error:", error);
-//                 setIsAuthenticated(false);
-//                 setUsername("");
-//                 setPassword("");
-//                 setAuthMessage("Failed to register. Please try again.");
-//             });
-//     };
