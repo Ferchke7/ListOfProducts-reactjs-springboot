@@ -11,7 +11,7 @@ import LoginForm from "./LoginComponents/LoginForm";
 export default function AppContent() {
 
     const [componentToShow, setComponentToShow] = useState("main");
-    const [isAdmin, setAdmin] = useState(false)
+
     const [isAuthenticated, setAuthentication] = useState(false);
 
     const login = () => {
