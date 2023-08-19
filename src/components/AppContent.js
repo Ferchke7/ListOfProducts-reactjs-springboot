@@ -1,9 +1,10 @@
 import * as React from "react";
-import {request, setAuthHeader} from "../axiosFile/axios_helper";
+import {getAuthToken, request, setAuthHeader} from "../axiosFile/axios_helper";
 import Buttons from './Buttons';
 
 import {useState} from "react";
 import LoginForm from "./LoginComponents/LoginForm";
+import CreateProducts from "./creatProduct/CreateProducts";
 
 
 
@@ -12,11 +13,14 @@ export default function AppContent() {
 
     const [componentToShow, setComponentToShow] = useState("main");
 
-    const [isAuthenticated, setAuthentication] = useState(false);
+    const [isAuthenticated, setAuthentication] = useState(getAuthToken() !== null && getAuthToken() !== "null");
 
     const login = () => {
         setComponentToShow("login");
     };
+    const createProduct = () => {
+        setComponentToShow("create")
+    }
 
     const logout = () => {
         setComponentToShow("main");
@@ -62,11 +66,13 @@ export default function AppContent() {
             <Buttons
                 login={login}
                 logout={logout}
+                create={createProduct}
                 isAuthenticated={isAuthenticated}
             />
             {componentToShow === "login" && (
                 <LoginForm onLogin={handleLogin} onRegister={handleRegister} />
             )}
+            {componentToShow === "create" && ( <CreateProducts />)}
             {componentToShow === "main" && <p>It is main</p>}
             {componentToShow === "authenticated" && <p>You've auth</p>}
             {componentToShow === "registered" && <p>You've registered</p>}
