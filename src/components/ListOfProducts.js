@@ -38,7 +38,6 @@ class ListOfProducts extends Component {
     }
 
     render() {
-        console.log(this.state.products)
         return (
             <div className="row justify-content-md-center">
                 <div>

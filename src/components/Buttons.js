@@ -16,6 +16,9 @@ export default function Buttons(props) {
                         <button className="btn btn-dark" style={{ margin: '10px' }} onClick={props.create}>
                             Create Product
                         </button>
+                        <button className="btn btn-dark" style={{ margin: '10px' }} onClick={props.myProducts}>
+                            My products
+                        </button>
                     </>
                 )}
             </div>
