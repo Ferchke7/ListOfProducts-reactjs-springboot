@@ -14,6 +14,7 @@ export default function AppContent() {
     const [componentToShow, setComponentToShow] = useState("main");
 
     const [isAuthenticated, setAuthentication] = useState(getAuthToken() !== null && getAuthToken() !== "null");
+    const [authenticatedUserLogin, setAuthenticatedUserLogin] = useState(null)
 
     const login = () => {
         setComponentToShow("login");
@@ -24,6 +25,7 @@ export default function AppContent() {
 
     const logout = () => {
         setComponentToShow("main");
+        setAuthenticatedUserLogin(null)
         setAuthHeader(null);
         setAuthentication(false);
     };
@@ -35,6 +37,7 @@ export default function AppContent() {
         })
             .then((response) => {
                 setAuthHeader(response.data.token);
+                setAuthenticatedUserLogin(login)
                 setAuthentication(true);
                 setComponentToShow("authenticated");
             })
@@ -54,6 +57,7 @@ export default function AppContent() {
             .then((response) => {
                 setAuthHeader(response.data.token);
                 setComponentToShow("registered");
+                setAuthenticatedUserLogin(login)
             })
             .catch(() => {
                 setAuthHeader(null);
@@ -72,10 +76,11 @@ export default function AppContent() {
             {componentToShow === "login" && (
                 <LoginForm onLogin={handleLogin} onRegister={handleRegister} />
             )}
-            {componentToShow === "create" && ( <CreateProducts />)}
-            {componentToShow === "main" && <p>It is main</p>}
-            {componentToShow === "authenticated" && <p>You've auth</p>}
-            {componentToShow === "registered" && <p>You've registered</p>}
+            {componentToShow === "create" && (<CreateProducts authToken={getAuthToken()}
+                                                              authenticatedUserLogin={authenticatedUserLogin} />)}
+            {componentToShow === "main" && <p>It is main </p>}
+            {componentToShow === "authenticated" && <p>Welcome {authenticatedUserLogin}</p>}
+            {componentToShow === "registered" && <p>You've been registered your as {authenticatedUserLogin}</p>}
         </>
     );
 }

@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 
-function ProductForm() {
+function ProductForm({ authToken, authenticatedUserLogin }) {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState(null);
@@ -22,11 +22,17 @@ function ProductForm() {
 
         try {
             const response = await axios.post('/create', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${authToken}`,
+                },
+                params: {
+                    authenticatedUserLogin: authenticatedUserLogin,
+                },
             });
             console.log(response.data);
         } catch (error) {
-            console.error(error);
+            console.error('Error uploading product:', error);
         }
     };
 
@@ -43,8 +49,8 @@ function ProductForm() {
                     <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
                 </div>
                 <div>
-                    <label>Image:</label>
-                    <input type="file" accept="image/*" onChange={handleImageChange} />
+                    <label className="form-label" htmlFor="customFile">Default file input example</label>
+                    <input type="file" class="form-control" accept="image/*" onChange={handleImageChange} />
                 </div>
                 <button type="submit">Submit</button>
             </form>

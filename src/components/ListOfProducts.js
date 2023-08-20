@@ -3,13 +3,14 @@ import {setAuthHeader , request} from "../axiosFile/axios_helper";
 import './ListOfProducts.css'
 import {Table} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css'
+import {UserInfoIcons} from "./userInfo/UserInformation";
 
 class ListOfProducts extends Component {
     constructor(props) {
         super(props);
         this.state = {
             products: [],
-            productToShow: "none"
+            userInfo: null,
         };
     }
 
@@ -32,8 +33,8 @@ class ListOfProducts extends Component {
             }
         );
     }
-    handleProductClick = (product) => {
-        this.state({ productToShow: product})
+    handleProductClick = (user) => {
+        this.setState({ userInfo: user })
     }
 
     render() {
@@ -48,21 +49,22 @@ class ListOfProducts extends Component {
                             <Table stripped bordered hover size={"sm"}>
                                 <thead>
                                 <tr>
-                                    <th width={"170"}>Name of Product</th>
+                                    <th width={"170"}>Picture of Product</th>
                                     <th width={"170"}>Name of Product</th>
                                     <th width={"170"}>Price</th>
+                                    <th width={"170"}>Distributor</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {this.state.products.map((product, index) => (
-                                    <tr key={index}>
+                                    <tr key={index} onClick={() => this.handleProductClick(product.user)}>
                                         {/*TODO Change this for detailed Product*/}
                                         <td>
                                             <img src={product.imageUrl} alt={product.name} style={{ width: '100px', height: '100px' }} />
                                         </td>
                                         <td>{product.name}</td>
                                         <td>${product.price}</td>
-
+                                        <td>{product.user.firstName}</td>
                                     </tr>
                                 ))}
                                 </tbody>
@@ -70,6 +72,10 @@ class ListOfProducts extends Component {
                         </div>
                     </div>
                 </div>
+                {this.state.userInfo && (
+                    <UserInfoIcons name={this.state.userInfo.firstName}
+                                   email={this.state.userInfo.email} />
+                )}
             </div>
         );
     }
