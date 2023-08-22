@@ -33,8 +33,7 @@ export default function LoginForm({ onLogin, onRegister }) {
     };
 
     return (
-        <div className="row justify-content-center">
-            <div>
+
                 <Tabs active={active} onTabChange={setActive}>
                     <Tabs.List>
                         <Tabs.Tab value="login">Login</Tabs.Tab>
@@ -75,7 +74,5 @@ export default function LoginForm({ onLogin, onRegister }) {
                         </form>
                     </Tabs.Panel>
                 </Tabs>
-            </div>
-        </div>
     );
 }
