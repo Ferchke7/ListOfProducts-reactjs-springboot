@@ -1,42 +1,71 @@
-import * as React from "react";
-import {getAuthToken, request, setAuthHeader} from "../axiosFile/axios_helper";
-import Buttons from './Buttons';
-import { Button, Group, Collapse, Box } from '@mantine/core';
+import React, { useEffect, useState } from "react";
+import { getAuthToken, request, setAuthHeader } from "../axiosFile/axios_helper";
+import { Button, Group, Collapse, Box, Drawer } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { useState} from "react";
+import { notifications } from '@mantine/notifications';
+import Buttons from './Buttons';
 import LoginForm from "./LoginComponents/LoginForm";
-import CreateProducts from "./creatProduct/CreateProducts";
 import UsersProduct from "./userInfo/UsersProduct";
-
-
-
+import CreateProducts from "./creatProduct/CreateProducts";
 
 export default function AppContent() {
-
     const [componentToShow, setComponentToShow] = useState("main");
-
-    const [isAuthenticated, setAuthentication] = useState(getAuthToken() !== null && getAuthToken() !== "null");
-    const [authenticatedUserLogin, setAuthenticatedUserLogin] = useState(null)
+    const isAuthenticated = getAuthToken() !== null && getAuthToken() !== "null";
+    const [authenticatedUserLogin, setAuthenticatedUserLogin] = useState(null);
     const [opened, { toggle }] = useDisclosure(false);
-    const [userId, setUserId] = useState()
+    const userId = localStorage.getItem("userId");
+    const [openDrawer, setOpenDrawer] = useState(false)
+
+
+    useEffect(() => {
+        const showNotification = (title, message, styles) => {
+            const notificationId = notifications.show({
+                title,
+                message,
+                styles,
+            });
+
+            setTimeout(() => {
+                notifications.hide(notificationId);
+            }, 5000);
+        };
+
+        if (authenticatedUserLogin != null && componentToShow === "authenticated") {
+            showNotification("You've been logged in", `Hello ${authenticatedUserLogin}`);
+        }
+        if (componentToShow === "registered") {
+            showNotification("You've been registered", `as ${authenticatedUserLogin}`);
+        }
+        if (authenticatedUserLogin == null && componentToShow === "noUser") {
+            showNotification("The user doesn't exist!", theme => ({
+                root: {
+                    backgroundColor: theme.colors.red[6],
+                },
+                title: { color: theme.white }
+            }));
+        }
+    }, [componentToShow, authenticatedUserLogin]);
+
     const login = () => {
         setComponentToShow("login");
+        setOpenDrawer(true)
     };
-    const createProduct = () => {
-        setComponentToShow("create")
-    }
 
+    const createProduct = () => {
+        setComponentToShow("create");
+    };
 
     const logout = () => {
         setComponentToShow("main");
-        setAuthenticatedUserLogin(null)
+        setAuthenticatedUserLogin(null);
+        localStorage.removeItem("userId");
         setAuthHeader(null);
-        setAuthentication(false);
     };
+
     const myProducts = () => {
-        setComponentToShow("myproducts")
-        console.log(userId)
-    }
+        setComponentToShow("myproducts");
+    };
+
     const handleLogin = (login, password) => {
         request("POST", "/login", {
             login: login,
@@ -44,9 +73,7 @@ export default function AppContent() {
         })
             .then((response) => {
                 setAuthHeader(response.data.token);
-                setAuthenticatedUserLogin(login)
-                setAuthentication(true);
-                setUserId(response.data.id)
+                setAuthenticatedUserLogin(login);
                 setComponentToShow("authenticated");
             })
             .catch(() => {
@@ -65,7 +92,7 @@ export default function AppContent() {
             .then((response) => {
                 setAuthHeader(response.data.token);
                 setComponentToShow("registered");
-                setAuthenticatedUserLogin(login)
+                setAuthenticatedUserLogin(login);
             })
             .catch(() => {
                 setAuthHeader(null);
@@ -83,30 +110,25 @@ export default function AppContent() {
                 isAuthenticated={isAuthenticated}
             />
             {componentToShow === "login" && (
-                <LoginForm onLogin={handleLogin} onRegister={handleRegister} />
+                <Drawer opened={openDrawer} position={"left"} onClose={() => setOpenDrawer(false)} title="Authentication"
+                        overlayProps={{ opacity: 0.5, blur: 4 }}>
+                    <LoginForm onLogin={handleLogin} onRegister={handleRegister} />
+                </Drawer>
             )}
-            {componentToShow === "create" && (<CreateProducts authToken={getAuthToken()}
-                                                              authenticatedUserLogin={authenticatedUserLogin} />)}
-            {componentToShow === "main" && <p>It is main </p>}
-            {componentToShow === "authenticated" && (
-                <p>Welcome {authenticatedUserLogin}</p>
-            )
-            }
+            {componentToShow === "create" && (
+                <CreateProducts authToken={getAuthToken()} authenticatedUserLogin={authenticatedUserLogin} />
+            )}
+            {componentToShow === "main" && <p>It is main {authenticatedUserLogin}</p>}
             {componentToShow === "myproducts" && (
-
                 <Box maxWidth={400} mx="auto">
-                    <Group position="center" mb={5}>
-                        <Button onClick={toggle} >Show my Product</Button>
+                    <Group>
+                        <Button onClick={toggle}>Show my Product</Button>
                     </Group>
-
                     <Collapse in={opened}>
-
                         <UsersProduct userId={userId} />
                     </Collapse>
                 </Box>
             )}
-            {componentToShow === "registered" && <p>You've been registered your as {authenticatedUserLogin}</p>}
-            {componentToShow === "noUser" && <p>User not found or wrong password!</p>}
         </>
     );
 }

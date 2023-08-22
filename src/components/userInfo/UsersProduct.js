@@ -1,4 +1,4 @@
-import { Table } from '@mantine/core';
+import {rem, Table} from '@mantine/core';
 import {useEffect, useState} from "react";
 import {request} from "../../axiosFile/axios_helper";
 
@@ -22,17 +22,16 @@ function UsersProduct({ userId }) {
         <tr>
             <td>{product.name}</td>
             <td>{product.price}</td>
-            <td>{product.imageUrl}</td>
+
         </tr>
     ));
 
     return (
-        <Table>
+        <Table style={{ border: `${rem(2)} solid grey` }} size="sm">
             <thead>
             <tr>
                 <th>Product Name</th>
                 <th>Price</th>
-                <th>Image</th>
             </tr>
             </thead>
             <tbody>{rows}</tbody>

@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import "./LoginForm.css";
 import classNames from "classnames";
 
 export default function LoginForm({ onLogin, onRegister }) {

@@ -3,9 +3,13 @@ import './App.css';
 
 import AppContent from './AppContent';
 import ListOfProducts from "./ListOfProducts";
+import {MantineProvider} from "@mantine/core";
+import {Notifications} from "@mantine/notifications";
 
 function App() {
     return (
+        <MantineProvider withNormalizeCSS withGlobalStyles>
+            <Notifications />
         <div className="App">
 
             <div className="container-fluid">
@@ -17,6 +21,7 @@ function App() {
                 </div>
             </div>
         </div>
+        </MantineProvider>
     );
 }
 
