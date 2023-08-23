@@ -15,6 +15,7 @@ export default function AppContent() {
     const [opened, { toggle }] = useDisclosure(false);
     const userId = localStorage.getItem("userId");
     const [openDrawer, setOpenDrawer] = useState(false)
+    const [openCreate, setOpenCreate] = useState(false)
 
 
     useEffect(() => {
@@ -29,6 +30,7 @@ export default function AppContent() {
                 notifications.hide(notificationId);
             }, 5000);
         };
+
 
         if (authenticatedUserLogin != null && componentToShow === "authenticated") {
             showNotification("You've been logged in", `Hello ${authenticatedUserLogin}`);
@@ -53,6 +55,7 @@ export default function AppContent() {
 
     const createProduct = () => {
         setComponentToShow("create");
+        setOpenCreate(true)
     };
 
     const logout = () => {
@@ -67,6 +70,8 @@ export default function AppContent() {
     };
 
     const handleLogin = (login, password) => {
+        console.log("Logging in with:", login, password);
+
         request("POST", "/login", {
             login: login,
             password: password,
@@ -75,13 +80,14 @@ export default function AppContent() {
                 setAuthHeader(response.data.token);
                 setAuthenticatedUserLogin(login);
                 setComponentToShow("authenticated");
+                localStorage.setItem("userId", response.data.id.toString());
             })
-            .catch(() => {
+            .catch((error) => {
+                console.error("Login failed:", error);
                 setAuthHeader(null);
                 setComponentToShow("noUser");
             });
     };
-
     const handleRegister = (firstName, email, login, password) => {
         request("POST", "/register", {
             firstName: firstName,
@@ -110,13 +116,25 @@ export default function AppContent() {
                 isAuthenticated={isAuthenticated}
             />
             {componentToShow === "login" && (
-                <Drawer opened={openDrawer} position={"left"} onClose={() => setOpenDrawer(false)} title="Authentication"
-                        overlayProps={{ opacity: 0.5, blur: 4 }}>
+                <Drawer opened={openDrawer} position={"left"} onClose={() => setOpenDrawer(false)}
+                        title="Register or Login"
+                        overlayProps={{ opacity: 0.5, blur: 4 }}
+                        transitionProps={{ transition: 'rotate-left',
+                            duration: 150,
+                            timingFunction: 'linear' }}>
                     <LoginForm onLogin={handleLogin} onRegister={handleRegister} />
                 </Drawer>
             )}
+
             {componentToShow === "create" && (
+                <Drawer opened={openCreate} position={"left"} onClose={() => setOpenCreate(false)}
+                        title="Create a product"
+                        overlayProps={{ opacity: 0.5, blur: 4 }}
+                        transitionProps={{ transition: 'rotate-left',
+                            duration: 150,
+                            timingFunction: 'linear' }}>
                 <CreateProducts authToken={getAuthToken()} authenticatedUserLogin={authenticatedUserLogin} />
+                </Drawer>
             )}
             {componentToShow === "main" && <p>It is main {authenticatedUserLogin}</p>}
             {componentToShow === "myproducts" && (

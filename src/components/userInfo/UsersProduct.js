@@ -5,7 +5,7 @@ import {request} from "../../axiosFile/axios_helper";
 function UsersProduct({ userId }) {
 
     const [products, setProducts] = useState([])
-
+    console.log(userId)
     useEffect(() => {
         if (userId !== null) {
             request("GET", `/myproducts/${userId}`)

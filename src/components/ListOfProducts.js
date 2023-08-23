@@ -4,6 +4,7 @@ import './ListOfProducts.css'
 import {Table} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css'
 import {UserInfoIcons} from "./userInfo/UserInformation";
+import {HoverCard} from "@mantine/core";
 
 class ListOfProducts extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class ListOfProducts extends Component {
     }
 
     componentDidMount() {
-        // Make the API call to fetch products and update the state accordingly
+
         request(
             "GET",
             "/products",
@@ -28,7 +29,6 @@ class ListOfProducts extends Component {
                     setAuthHeader(null);
                 } else {
                     console.error('Error fetching products:', error);
-                    // Handle the error state differently if needed
                 }
             }
         );
@@ -56,10 +56,14 @@ class ListOfProducts extends Component {
                                 </thead>
                                 <tbody>
                                 {this.state.products.map((product, index) => (
+
                                     <tr key={index} onClick={() => this.handleProductClick(product.user)}>
                                         {/*TODO Change this for detailed Product*/}
                                         <td>
-                                            <img src={product.imageUrl} alt={product.name} style={{ width: '100px', height: '100px' }} />
+                                            <img src={product.imageUrl}
+                                                 alt={product.name}
+                                                 style={{ width: '100px'
+                                                     , height: '100px' }} />
                                         </td>
                                         <td>{product.name}</td>
                                         <td>${product.price}</td>
@@ -72,6 +76,7 @@ class ListOfProducts extends Component {
                     </div>
                 </div>
                 {this.state.userInfo && (
+
                     <UserInfoIcons name={this.state.userInfo.firstName}
                                    email={this.state.userInfo.email} />
                 )}
