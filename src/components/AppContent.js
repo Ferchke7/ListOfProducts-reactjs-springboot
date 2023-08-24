@@ -13,7 +13,7 @@ export default function AppContent() {
     const [componentToShow, setComponentToShow] = useState("main");
     const isAuthenticated = getAuthToken() !== null && getAuthToken() !== "null";
     const [authenticatedUserLogin, setAuthenticatedUserLogin] = useState(null);
-    const [opened, { toggle }] = useDisclosure(false);
+    const [opened, setOpened] = useState(false);
     const userId = localStorage.getItem("userId");
     const [openDrawer, setOpenDrawer] = useState(false)
     const [openCreate, setOpenCreate] = useState(false)
@@ -67,7 +67,9 @@ export default function AppContent() {
     };
 
     const myProducts = () => {
+        setOpened(true)
         setComponentToShow("myproducts");
+
     };
 
     const handleLogin = (login, password) => {
@@ -130,24 +132,22 @@ export default function AppContent() {
 
             {componentToShow === "create" && (
                 <Drawer opened={openCreate} position={"left"} onClose={() => setOpenCreate(false)}
-                        title="Create a product"
                         overlayProps={{ opacity: 0.5, blur: 4 }}
                         transitionProps={{ transition: 'rotate-left',
-                            duration: 150,
+                            duration: 170,
                             timingFunction: 'linear' }}>
                 <CreateProducts authToken={getAuthToken()} authenticatedUserLogin={authenticatedUserLogin} />
                 </Drawer>
             )}
             {componentToShow === "main" && <p>It is main {authenticatedUserLogin}</p>}
             {componentToShow === "myproducts" && (
-                <Box maxWidth={400} mx="auto">
-                    <Group>
-                        <Button onClick={toggle}>Show my Product</Button>
-                    </Group>
-                    <Collapse in={opened}>
-                        <UsersProduct userId={userId} />
-                    </Collapse>
-                </Box>
+                <Drawer opened={opened} position={"left"} onClose={() => setOpened(false)}
+                        overlayProps={{ opacity: 0.5, blur: 1 }}
+                        transitionProps={{ transition: 'rotate-left',
+                            duration: 170,
+                            timingFunction: 'linear' }}>
+                    <UsersProduct userId={userId} />
+                </Drawer>
             )}
             <ListOfProducts></ListOfProducts>
         </>

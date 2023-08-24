@@ -33,8 +33,7 @@ function ListOfProducts() {
 
     const onPageChange = (page) => {
         setCurrentPage(page);
-        console.log("onPageChange triggered. Current page:", currentPage);
-        console.log("onPageChange triggered. Current page:", page);
+
     };
     const handleProductClick = (user) => {
         setUserInfo(user);
