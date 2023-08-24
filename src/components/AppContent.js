@@ -7,6 +7,7 @@ import Buttons from './Buttons';
 import LoginForm from "./LoginComponents/LoginForm";
 import UsersProduct from "./userInfo/UsersProduct";
 import CreateProducts from "./creatProduct/CreateProducts";
+import ListOfProducts from "./ListOfProducts";
 
 export default function AppContent() {
     const [componentToShow, setComponentToShow] = useState("main");
@@ -108,6 +109,7 @@ export default function AppContent() {
 
     return (
         <>
+
             <Buttons
                 login={login}
                 logout={logout}
@@ -147,6 +149,7 @@ export default function AppContent() {
                     </Collapse>
                 </Box>
             )}
+            <ListOfProducts></ListOfProducts>
         </>
     );
 }

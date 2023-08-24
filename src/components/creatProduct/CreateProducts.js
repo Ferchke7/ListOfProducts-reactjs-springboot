@@ -1,12 +1,12 @@
-import {useState} from "react";
+import { useState } from "react";
 import axios from "axios";
 
 
-
 function ProductForm({ authToken, authenticatedUserLogin }) {
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
+    const [name, setName] = useState("");
+    const [price, setPrice] = useState("");
     const [image, setImage] = useState(null);
+
 
     const handleImageChange = (e) => {
         setImage(e.target.files[0]);
@@ -15,16 +15,17 @@ function ProductForm({ authToken, authenticatedUserLogin }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+
         const formData = new FormData();
-        formData.append('name', name);
-        formData.append('price', price);
-        formData.append('file', image);
+        formData.append("name", name);
+        formData.append("price", price);
+        formData.append("file", image);
 
         try {
-            const response = await axios.post('/create', formData, {
+            const response = await axios.post("/create", formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${authToken}`,
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${authToken}`,
                 },
                 params: {
                     authenticatedUserLogin: authenticatedUserLogin,
@@ -32,7 +33,9 @@ function ProductForm({ authToken, authenticatedUserLogin }) {
             });
             console.log(response.data);
         } catch (error) {
-            console.error('Error uploading product:', error);
+            console.error("Error uploading product:", error);
+        } finally {
+
         }
     };
 
@@ -42,15 +45,30 @@ function ProductForm({ authToken, authenticatedUserLogin }) {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Name:</label>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
                 </div>
                 <div>
                     <label>Price:</label>
-                    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+                    <input
+                        type="number"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                    />
                 </div>
                 <div>
-                    <label className="form-label" htmlFor="customFile">Default file input example</label>
-                    <input type="file" class="form-control" accept="image/*" onChange={handleImageChange} />
+                    <label className="form-label" htmlFor="customFile">
+                        Default file input example
+                    </label>
+                    <input
+                        type="file"
+                        className="form-control"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                    />
                 </div>
                 <button type="submit">Submit</button>
             </form>
