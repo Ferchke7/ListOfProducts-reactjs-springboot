@@ -1,6 +1,7 @@
-import {rem, Table} from '@mantine/core';
+import {ActionIcon, Button, rem, Table} from '@mantine/core';
 import {useEffect, useState} from "react";
 import {request} from "../../axiosFile/axios_helper";
+import {IconX} from "@tabler/icons-react";
 
 function UsersProduct({ userId }) {
 
@@ -22,7 +23,8 @@ function UsersProduct({ userId }) {
         <tr>
             <td>{product.name}</td>
             <td>{product.price}</td>
-
+            <td>{new Date(product.createdDate).toLocaleDateString()}</td>
+            <ActionIcon><IconX size="1rem" color="red" /></ActionIcon>
         </tr>
     ));
 
@@ -32,6 +34,7 @@ function UsersProduct({ userId }) {
             <tr>
                 <th>Product Name</th>
                 <th>Price</th>
+                <th>Date of creation</th>
             </tr>
             </thead>
             <tbody>{rows}</tbody>

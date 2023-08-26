@@ -121,7 +121,7 @@ export default function AppContent() {
             />
             {componentToShow === "login" && (
                 <Drawer opened={openDrawer} position={"left"} onClose={() => setOpenDrawer(false)}
-                        title="Register or Login"
+
                         overlayProps={{ opacity: 0.5, blur: 4 }}
                         transitionProps={{ transition: 'rotate-left',
                             duration: 150,

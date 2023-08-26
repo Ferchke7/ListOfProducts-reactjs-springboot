@@ -43,13 +43,13 @@ export default function LoginForm({ onLogin, onRegister }) {
 
     return (
         <Paper radius="md" p="xl">
-            <Text size="lg" weight={500}>
+            <Text size="lg" weight={500} ta="center">
                 Welcome, {type} with
             </Text>
 
             <Group grow mb="md" mt="md">
                 <Button radius="xl">Google</Button>
-                <Button radius="xl">Twitter</Button>
+                <Button radius="xl">Facebook</Button>
             </Group>
 
             <Divider label={`Or continue with ${type}`} labelPosition="center" my="lg" />
