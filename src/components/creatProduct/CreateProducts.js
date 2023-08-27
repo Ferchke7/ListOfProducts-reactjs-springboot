@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {
     Input,
@@ -11,12 +11,15 @@ import {
 import { Icon3dCubeSphere} from "@tabler/icons-react";
 import '../style/Product-form.css'
 import {useDisclosure} from "@mantine/hooks";
+import {notifications} from "@mantine/notifications";
 function ProductForm({ authToken }) {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [image, setImage] = useState();
     const userLogin = localStorage.getItem("userLogin")
     const [visible, { toggle }] = useDisclosure(false);
+    const [createdNotification, setCreatedNotification] = useState()
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -37,11 +40,16 @@ function ProductForm({ authToken }) {
                 },
             });
             console.log(response.data);
+            notifications.show({ message: `Product ${name} has been created`})
         } catch (error) {
             console.error("Error uploading product:", error);
+            notifications.show({
+                message: 'OOPS something went wrong' ,
+                color: 'red'})
         }
         const click = toggle;
         click()
+
     };
 
     return (

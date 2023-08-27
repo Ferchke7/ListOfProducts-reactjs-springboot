@@ -16,7 +16,7 @@ export default function AppContent() {
     const userId = localStorage.getItem("userId");
     const [openDrawer, setOpenDrawer] = useState(false)
     const [openCreate, setOpenCreate] = useState(false)
-    const userLogin = localStorage.getItem("userLogin")
+
 
     useEffect(() => {
         const showNotification = (title, message, styles) => {
