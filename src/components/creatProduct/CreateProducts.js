@@ -1,26 +1,31 @@
-import { useState } from "react";
+import {useState} from "react";
 import axios from "axios";
-import {Loader, TextInput, Input, FileInput, NumberInput, Button, Box} from "@mantine/core";
-import { Icon3dCubeSphere, IconAt } from "@tabler/icons-react";
+import {
+    Input,
+    FileInput,
+    NumberInput,
+    Button,
+    Box,
+    LoadingOverlay
+} from "@mantine/core";
+import { Icon3dCubeSphere} from "@tabler/icons-react";
 import '../style/Product-form.css'
-function ProductForm({ authToken, authenticatedUserLogin }) {
+import {useDisclosure} from "@mantine/hooks";
+function ProductForm({ authToken }) {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [image, setImage] = useState();
-
-
-
-
+    const userLogin = localStorage.getItem("userLogin")
+    const [visible, { toggle }] = useDisclosure(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-
         const formData = new FormData();
         formData.append("name", name);
         formData.append("price", price);
         formData.append("file", image);
+
         console.log(image)
-        console.log(authenticatedUserLogin)
+
         try {
             const response = await axios.post("/create", formData, {
                 headers: {
@@ -28,20 +33,21 @@ function ProductForm({ authToken, authenticatedUserLogin }) {
                     Authorization: `Bearer ${authToken}`,
                 },
                 params: {
-                    authenticatedUserLogin: authenticatedUserLogin,
+                    authenticatedUserLogin: userLogin,
                 },
             });
             console.log(response.data);
         } catch (error) {
             console.error("Error uploading product:", error);
-        } finally {
-
         }
+        const click = toggle;
+        click()
     };
 
     return (
         <form onSubmit={handleSubmit} className="product-form">
         <Box maw={320} mx="auto" pos="relative">
+            <LoadingOverlay visible={visible} overlayBlur={2} onClick={toggle}/>
             <Input
                 icon={<Icon3dCubeSphere />}
                 placeholder="Name of Product"
@@ -69,7 +75,7 @@ function ProductForm({ authToken, authenticatedUserLogin }) {
                 value={image}
                 onChange={setImage}
             />
-            <Button type="submit" color="yellow">
+            <Button type="submit" color="yellow" onClick={toggle}>
                 Submit a product
             </Button>
         </Box>

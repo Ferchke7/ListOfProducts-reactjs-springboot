@@ -18,9 +18,6 @@ function App() {
             <Route path="/" element={<AppContent />} />
                 <Route path="products" element={<ListOfProducts />} />
             <Route path="myproducts" element={<UsersProduct />} />
-        {/*<AppContent />*/}
-        {/*<ListOfProducts />*/}
-
         </Routes>
         </BrowserRouter>
         </MantineProvider>

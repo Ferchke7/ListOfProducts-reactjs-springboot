@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAuthToken, request, setAuthHeader } from "../axiosFile/axios_helper";
-import { Button, Group, Collapse, Box, Drawer } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Drawer } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import Buttons from './Buttons';
 import LoginForm from "./LoginComponents/LoginForm";
@@ -17,7 +16,7 @@ export default function AppContent() {
     const userId = localStorage.getItem("userId");
     const [openDrawer, setOpenDrawer] = useState(false)
     const [openCreate, setOpenCreate] = useState(false)
-
+    const userLogin = localStorage.getItem("userLogin")
 
     useEffect(() => {
         const showNotification = (title, message, styles) => {
@@ -63,6 +62,7 @@ export default function AppContent() {
         setComponentToShow("main");
         setAuthenticatedUserLogin(null);
         localStorage.removeItem("userId");
+        localStorage.removeItem("userLogin")
         setAuthHeader(null);
     };
 
@@ -84,6 +84,7 @@ export default function AppContent() {
                 setAuthenticatedUserLogin(login);
                 setComponentToShow("authenticated");
                 localStorage.setItem("userId", response.data.id.toString());
+                localStorage.setItem("userLogin",response.data.login.toString())
             })
             .catch((error) => {
                 console.error("Login failed:", error);
@@ -136,7 +137,7 @@ export default function AppContent() {
                         transitionProps={{ transition: 'rotate-left',
                             duration: 170,
                             timingFunction: 'linear' }}>
-                <CreateProducts authToken={getAuthToken()} authenticatedUserLogin={authenticatedUserLogin} />
+                <CreateProducts authToken={getAuthToken()} />
                 </Drawer>
             )}
             {componentToShow === "main" && <p>It is main {authenticatedUserLogin}</p>}

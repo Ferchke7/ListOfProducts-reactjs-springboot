@@ -1,11 +1,13 @@
-import {ActionIcon, Button, rem, Table} from '@mantine/core';
+import {ActionIcon, rem, Table} from '@mantine/core';
 import {useEffect, useState} from "react";
 import {request} from "../../axiosFile/axios_helper";
 import {IconX} from "@tabler/icons-react";
 
+
 function UsersProduct({ userId }) {
 
     const [products, setProducts] = useState([])
+    const [deleteResponse, setDeleteResponse] = useState()
     console.log(userId)
     useEffect(() => {
         if (userId !== null) {
@@ -19,12 +21,25 @@ function UsersProduct({ userId }) {
         }
     }, [userId]);
 
+    const openDeleteProduct = (imageId) => {
+        console.log("WORKING and delete if " + imageId)
+        request("DELETE", `/delete/${imageId}`)
+            .then((response) => {
+                setDeleteResponse(response)
+            })
+            .catch((error) => {
+                console.error('Error fetching and deleting:', error);
+            })
+    }
+
     const rows = products.map((product) => (
         <tr>
             <td>{product.name}</td>
             <td>{product.price}</td>
             <td>{new Date(product.createdDate).toLocaleDateString()}</td>
-            <ActionIcon><IconX size="1rem" color="red" /></ActionIcon>
+            <ActionIcon onClick={() => {
+                openDeleteProduct(product.id)}
+            }><IconX size="1rem" color="red" /></ActionIcon>
         </tr>
     ));
 
