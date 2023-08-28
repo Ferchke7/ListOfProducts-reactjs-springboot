@@ -12,9 +12,14 @@ import {
     Anchor,
     Stack,
 } from '@mantine/core';
+import {IconBrandFacebook, IconBrandGoogle} from "@tabler/icons-react";
+import GoogleLogin from "./GoogleLogin";
+import {Link} from "react-router-dom";
+import {useState} from "react";
 
 export default function LoginForm({ onLogin, onRegister }) {
     const [type, toggle] = useToggle(['login', 'register']);
+    const [socialAuth, setSocialAuth] = useState("")
     const form = useForm({
         initialValues: {
             firstName: '',
@@ -48,14 +53,15 @@ export default function LoginForm({ onLogin, onRegister }) {
             </Text>
 
             <Group grow mb="md" mt="md">
-                <Button radius="xl">Google</Button>
-                <Button radius="xl">Facebook</Button>
+                <Button radius="xl" onClick={setSocialAuth('google')}><IconBrandGoogle /></Button>
+                <Button radius="xl"><IconBrandFacebook /></Button>
             </Group>
 
             <Divider label={`Or continue with ${type}`} labelPosition="center" my="lg" />
 
             <form onSubmit={onSubmit}>
                 <Stack>
+                    {}
                     {type === 'register' && (
                         <>
                             <TextInput

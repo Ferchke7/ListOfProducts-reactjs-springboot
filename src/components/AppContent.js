@@ -120,6 +120,7 @@ export default function AppContent() {
                 myProducts={myProducts}
                 isAuthenticated={isAuthenticated}
             />
+            <ListOfProducts></ListOfProducts>
             {componentToShow === "login" && (
                 <Drawer opened={openDrawer} position={"left"} onClose={() => setOpenDrawer(false)}
 
@@ -150,7 +151,7 @@ export default function AppContent() {
                     <UsersProduct userId={userId} />
                 </Drawer>
             )}
-            <ListOfProducts></ListOfProducts>
+
         </>
     );
 }

@@ -41,6 +41,7 @@ function ProductForm({ authToken }) {
             });
             console.log(response.data);
             notifications.show({ message: `Product ${name} has been created`})
+
         } catch (error) {
             console.error("Error uploading product:", error);
             notifications.show({
