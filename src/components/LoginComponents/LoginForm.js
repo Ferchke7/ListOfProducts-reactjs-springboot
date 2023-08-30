@@ -13,13 +13,15 @@ import {
     Stack,
 } from '@mantine/core';
 import {IconBrandFacebook, IconBrandGoogle} from "@tabler/icons-react";
-import GoogleLogin from "./GoogleLogin";
-import {Link} from "react-router-dom";
 import {useState} from "react";
+import FacebookLoginComponent from "./FacebookLoginComponent";
+
+
 
 export default function LoginForm({ onLogin, onRegister }) {
     const [type, toggle] = useToggle(['login', 'register']);
-    const [socialAuth, setSocialAuth] = useState("")
+    let [testAuth, setTestAuth] = useState('');
+
     const form = useForm({
         initialValues: {
             firstName: '',
@@ -35,6 +37,14 @@ export default function LoginForm({ onLogin, onRegister }) {
         },
     });
 
+    const setGoogle = () => {
+        setTestAuth('google');
+        console.log(testAuth)
+    }
+    const setFacebook = () => {
+        setTestAuth("facebook")
+        console.log(testAuth)
+    }
     const onSubmit = (event) => {
         event.preventDefault()
         if (type === 'login') {
@@ -53,15 +63,20 @@ export default function LoginForm({ onLogin, onRegister }) {
             </Text>
 
             <Group grow mb="md" mt="md">
-                <Button radius="xl" onClick={setSocialAuth('google')}><IconBrandGoogle /></Button>
-                <Button radius="xl"><IconBrandFacebook /></Button>
+                <Button radius="xl" onClick={setGoogle}><IconBrandGoogle /></Button>
+                  <Button radius="xl" onClick={setFacebook}><IconBrandFacebook /></Button>
             </Group>
 
             <Divider label={`Or continue with ${type}`} labelPosition="center" my="lg" />
 
             <form onSubmit={onSubmit}>
                 <Stack>
-                    {}
+                    {testAuth === 'google' && (
+                        <FacebookLoginComponent />
+                    )}
+                    {testAuth === 'facebook' && (
+                        <Text>it is a FACEBOOK</Text>
+                    )}
                     {type === 'register' && (
                         <>
                             <TextInput

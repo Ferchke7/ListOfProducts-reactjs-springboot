@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import axios from "axios";
 import {
     Input,
@@ -18,7 +18,7 @@ function ProductForm({ authToken }) {
     const [image, setImage] = useState();
     const userLogin = localStorage.getItem("userLogin")
     const [visible, { toggle }] = useDisclosure(false);
-    const [createdNotification, setCreatedNotification] = useState()
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();

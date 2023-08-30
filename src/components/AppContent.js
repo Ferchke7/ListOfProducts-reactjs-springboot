@@ -64,6 +64,7 @@ export default function AppContent() {
         localStorage.removeItem("userId");
         localStorage.removeItem("userLogin")
         setAuthHeader(null);
+
     };
 
     const myProducts = () => {
@@ -120,7 +121,7 @@ export default function AppContent() {
                 myProducts={myProducts}
                 isAuthenticated={isAuthenticated}
             />
-            <ListOfProducts></ListOfProducts>
+            {/*<ListOfProducts></ListOfProducts>*/}
             {componentToShow === "login" && (
                 <Drawer opened={openDrawer} position={"left"} onClose={() => setOpenDrawer(false)}
 
@@ -151,7 +152,7 @@ export default function AppContent() {
                     <UsersProduct userId={userId} />
                 </Drawer>
             )}
-
+            <ListOfProducts></ListOfProducts>
         </>
     );
 }

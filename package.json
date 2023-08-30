@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
+    "@greatsumini/react-facebook-login": "^3.3.3",
     "@mantine/carousel": "^6.0.19",
     "@mantine/core": "^6.0.19",
     "@mantine/dates": "^6.0.19",
@@ -37,6 +38,7 @@
     "react-hook-form": "^7.45.4",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
+    "reactjs-social-login": "^2.6.3",
     "sass": "^1.64.2",
     "url": "^0.11.1",
     "web-vitals": "^2.1.4"
