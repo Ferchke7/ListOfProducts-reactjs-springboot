@@ -8,6 +8,7 @@ function FacebookLoginComponent() {
 
     const responseFacebook = (response) => {
         console.log(response);
+        console.log(`this is login ${login}  this one data ${data} this one picture ${picture}`)
         // Login failed
         if (response.status === "unknown") {
             alert("Login failed!");
@@ -29,10 +30,10 @@ function FacebookLoginComponent() {
     };
 
     return (
-        <div className="container">
+        <div>
             {!login && (
                 <FacebookLogin
-                    appId="569720507786195"
+                    appId="273513518843241"
                     autoLoad={false}
                     fields="name,email,picture"
                     scope="public_profile,email,user_friends"

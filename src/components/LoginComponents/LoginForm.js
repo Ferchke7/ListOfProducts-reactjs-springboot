@@ -71,9 +71,9 @@ export default function LoginForm({ onLogin, onRegister }) {
 
             <form onSubmit={onSubmit}>
                 <Stack>
-                    {testAuth === 'google' && (
-                        <FacebookLoginComponent />
-                    )}
+                    {/*{testAuth === 'google' && (*/}
+                    {/*    <FacebookLoginComponent />*/}
+                    {/*)}*/}
                     {testAuth === 'facebook' && (
                         <Text>it is a FACEBOOK</Text>
                     )}
