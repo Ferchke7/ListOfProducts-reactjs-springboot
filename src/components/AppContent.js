@@ -16,7 +16,7 @@ export default function AppContent() {
     const userId = localStorage.getItem("userId");
     const [openDrawer, setOpenDrawer] = useState(false)
     const [openCreate, setOpenCreate] = useState(false)
-
+    console.log(localStorage.getItem('app_auth_token'))
 
     useEffect(() => {
         const showNotification = (title, message, styles) => {
@@ -63,6 +63,7 @@ export default function AppContent() {
         setAuthenticatedUserLogin(null);
         localStorage.removeItem("userId");
         localStorage.removeItem("userLogin")
+        window.location.reload()
         setAuthHeader(null);
 
     };
@@ -74,7 +75,7 @@ export default function AppContent() {
     };
 
     const handleLogin = (login, password) => {
-        console.log("Logging in with:", login, password);
+
 
         request("POST", "/login", {
             login: login,
@@ -88,7 +89,7 @@ export default function AppContent() {
                 localStorage.setItem("userLogin",response.data.login.toString())
             })
             .catch((error) => {
-                console.error("Login failed:", error);
+
                 setAuthHeader(null);
                 setComponentToShow("noUser");
             });
@@ -104,8 +105,10 @@ export default function AppContent() {
                 setAuthHeader(response.data.token);
                 setComponentToShow("registered");
                 setAuthenticatedUserLogin(login);
+
             })
-            .catch(() => {
+            .catch((error) => {
+                console.log(`error is ${error}`)
                 setAuthHeader(null);
                 setComponentToShow("main");
             });

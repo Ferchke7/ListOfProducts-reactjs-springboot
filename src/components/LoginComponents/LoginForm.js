@@ -13,14 +13,12 @@ import {
     Stack,
 } from '@mantine/core';
 import {IconBrandFacebook, IconBrandGoogle} from "@tabler/icons-react";
-import {useState} from "react";
-import FacebookLoginComponent from "./FacebookLoginComponent";
-
+import {useGoogleLogin} from "@react-oauth/google";
 
 
 export default function LoginForm({ onLogin, onRegister }) {
     const [type, toggle] = useToggle(['login', 'register']);
-    let [testAuth, setTestAuth] = useState('');
+
 
     const form = useForm({
         initialValues: {
@@ -37,14 +35,11 @@ export default function LoginForm({ onLogin, onRegister }) {
         },
     });
 
-    const setGoogle = () => {
-        setTestAuth('google');
-        console.log(testAuth)
-    }
-    const setFacebook = () => {
-        setTestAuth("facebook")
-        console.log(testAuth)
-    }
+
+    const loginGoogle = useGoogleLogin({
+        onSuccess: tokenResponse => console.log(tokenResponse),
+    })
+
     const onSubmit = (event) => {
         event.preventDefault()
         if (type === 'login') {
@@ -54,29 +49,27 @@ export default function LoginForm({ onLogin, onRegister }) {
             const { firstName, email, login, password } = form.values;
             onRegister(firstName, email, login, password);
         }
+        console.log(form.values);
     };
 
     return (
+
         <Paper radius="md" p="xl">
             <Text size="lg" weight={500} ta="center">
                 Welcome, {type} with
             </Text>
 
             <Group grow mb="md" mt="md">
-                <Button radius="xl" onClick={setGoogle}><IconBrandGoogle /></Button>
-                  <Button radius="xl" onClick={setFacebook}><IconBrandFacebook /></Button>
+
+                <Button radius="xl" onClick={() => loginGoogle()}><IconBrandGoogle /></Button>
+                  <Button radius="xl"><IconBrandFacebook /></Button>
             </Group>
 
             <Divider label={`Or continue with ${type}`} labelPosition="center" my="lg" />
 
             <form onSubmit={onSubmit}>
                 <Stack>
-                    {/*{testAuth === 'google' && (*/}
-                    {/*    <FacebookLoginComponent />*/}
-                    {/*)}*/}
-                    {testAuth === 'facebook' && (
-                        <Text>it is a FACEBOOK</Text>
-                    )}
+
                     {type === 'register' && (
                         <>
                             <TextInput
@@ -90,7 +83,7 @@ export default function LoginForm({ onLogin, onRegister }) {
                             <TextInput
                                 required
                                 label="Email"
-                                placeholder="hello@mantine.dev"
+                                placeholder="hello@myemail.com"
                                 value={form.values.email}
                                 onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
                                 error={form.errors.email && 'Invalid email'}
