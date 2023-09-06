@@ -8,6 +8,7 @@ import {Notifications} from "@mantine/notifications";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import UsersProduct from "./userInfo/UsersProduct";
 import {GoogleOAuthProvider} from "@react-oauth/google";
+import UserList from "./adminPanel/UserList";
 
 
 
@@ -23,6 +24,7 @@ function App() {
                 <Route path="products" element={<ListOfProducts />} />
             <Route path="myproducts" element={<UsersProduct />} />
             <Route path="sign-in" element={<AppContent />} ></Route>
+            <Route path="admin" element={<UserList />} />
         </Routes>
         </BrowserRouter>
         </MantineProvider>

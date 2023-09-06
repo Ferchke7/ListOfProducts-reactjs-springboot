@@ -17,6 +17,7 @@ export default function AppContent() {
     const [openDrawer, setOpenDrawer] = useState(false)
     const [openCreate, setOpenCreate] = useState(false)
     console.log(localStorage.getItem('app_auth_token'))
+    console.log(localStorage.getItem("authenticated token is : ", ))
 
     useEffect(() => {
         const showNotification = (title, message, styles) => {
@@ -83,6 +84,7 @@ export default function AppContent() {
         })
             .then((response) => {
                 setAuthHeader(response.data.token);
+                console.log(response.data.token)
                 setAuthenticatedUserLogin(login);
                 setComponentToShow("authenticated");
                 localStorage.setItem("userId", response.data.id.toString());

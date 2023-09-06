@@ -63,6 +63,7 @@ function ListOfProducts() {
                             <th width={"170"}>Name of Product</th>
                             <th width={"170"}>Price</th>
                             <th width={"170"}>Distributor</th>
+                            <th width={"170"}>Posted date</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -76,6 +77,7 @@ function ListOfProducts() {
                                 <td>{product.name}</td>
                                 <td>${product.price}</td>
                                 <td>{product.user.firstName}</td>
+                                <td>{new Date(product.createdDate).toLocaleDateString()}</td>
                             </tr>
                         ))}
                         </tbody>
