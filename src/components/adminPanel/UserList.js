@@ -3,11 +3,10 @@ import React, {useEffect, useState} from "react";
 import {request, setAuthHeader} from "../../axiosFile/axios_helper";
 import {IconMessage2, IconPencil, IconSettings2, IconTrash} from "@tabler/icons-react";
 import {DeleteButton} from "@refinedev/mantine";
+import {notifications} from "@mantine/notifications";
 export default function UserList() {
     const [userList,setUserList] = useState([])
-    const [tempList, setTempList] = useState(null)
-    const rolesData = ['USER','ADMIN','SELLER'];
-    const [roler,setRoler] = useState(null)
+
     useEffect(() => {
         request('GET', `/users`, {})
             .then((response) => {
@@ -22,11 +21,12 @@ export default function UserList() {
             });
     },[]);
 
-    const handleRoleChange = (userId, newRole) => {
+    const handleRoleChange = (userLogin, newRole) => {
 
-        request('POST',`/users/${userId}/change-role?newRole=${newRole}`, {})
+        request('POST',`/users/${userLogin}/change-role?newRole=${newRole}`, {})
             .then((response) => {
-                console.log(`ROLE HAS CHANGED FOR `, userId, newRole)
+                console.log(`ROLE HAS CHANGED FOR `, userLogin, newRole)
+                notifications.show({ message: "You've changed a role of " + userLogin + " to " + newRole})
             })
             .catch((error) => {
             console.error(`ERROR`)

@@ -4,17 +4,21 @@ import { setAuthHeader, request } from "../axiosFile/axios_helper";
 import './ListOfProducts.css'
 import { Table } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
-import { UserInfoIcons } from "./userInfo/UserInformation";
-import { Pagination } from "@mantine/core";
+
+import {Button, Dialog, Group, Pagination, rem, ScrollArea, Text, TextInput} from "@mantine/core";
+import {useDisclosure} from "@mantine/hooks";
+import {IconMessage2} from "@tabler/icons-react";
 
 function ListOfProducts() {
     const [products, setProducts] = useState([]);
-    const [userInfo, setUserInfo] = useState(null);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [totalProductsCount, setTotalProductsCount] = useState(0);
-
-
+    const [opened, { toggle, close }] = useDisclosure(false);
+    const [chatInfo,{ openChat, closeChat }] = useDisclosure(false);
+    const [tempDial, setTempDial] = useState('');
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         request('GET', `/products?page=${currentPage}&pageSize=${itemsPerPage}`, {})
@@ -35,9 +39,13 @@ function ListOfProducts() {
         setCurrentPage(page);
 
     };
-    const handleProductClick = (user) => {
-        setUserInfo(user);
-    }
+
+    const handleSendMessage = () => {
+        // Add the message to tempDial and reset the message input
+        setTempDial((prevDial) => prevDial + `\n${message}`);
+        setMessage('');
+    };
+
 
 
     useEffect(() => {
@@ -68,15 +76,41 @@ function ListOfProducts() {
                         </thead>
                         <tbody>
                         {products.map((product, index) => (
-                            <tr key={index} onClick={() => handleProductClick(product.user)}>
+                            <tr key={index}>
                                 <td>
                                     <img src={product.imageUrl}
                                          alt={product.name}
                                          style={{ width: '100px', height: '100px' }} />
                                 </td>
-                                <td>{product.name}</td>
+                                <td>
+                                    {product.name}
+                                </td>
                                 <td>${product.price}</td>
-                                <td>{product.user.firstName}</td>
+                                <td>
+                                    {product.user.firstName}
+
+                                    <Button compact onClick={toggle} rightIcon={<IconMessage2 />}
+                                            variant="white" size={rem(5)} />
+                                    <Dialog opened={opened} withCloseButton onClose={close} size="lg" radius="md" >
+                                        <Text size="sm" mb="xs" weight={500}>
+                                            Send a message to {product.user.firstName} as {localStorage.getItem("userLogin")}
+                                        </Text>
+                                        <ScrollArea h={200}>
+                                        <Text>
+                                            {tempDial}
+                                        </Text>
+                                        </ScrollArea>
+                                        <TextInput
+                                            placeholder="Send a message"
+                                            value={message}
+                                            onChange={(e) => setMessage(e.target.value)}
+                                            rightSection={
+                                                <Button onClick={handleSendMessage} rightIcon={<IconMessage2 />} />
+                                            }
+                                            ></TextInput>
+                                    </Dialog>
+
+                                </td>
                                 <td>{new Date(product.createdDate).toLocaleDateString()}</td>
                             </tr>
                         ))}
@@ -99,9 +133,7 @@ function ListOfProducts() {
                     />
                 </div>
             </div>
-            {userInfo && (
-                <UserInfoIcons name={userInfo.firstName} email={userInfo.email} />
-            )}
+
         </div>
     );
 }

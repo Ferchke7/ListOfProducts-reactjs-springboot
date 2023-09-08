@@ -16,8 +16,7 @@ export default function AppContent() {
     const userId = localStorage.getItem("userId");
     const [openDrawer, setOpenDrawer] = useState(false)
     const [openCreate, setOpenCreate] = useState(false)
-    console.log(localStorage.getItem('app_auth_token'))
-    console.log(localStorage.getItem("authenticated token is : ", ))
+
 
     useEffect(() => {
         const showNotification = (title, message, styles) => {
@@ -52,6 +51,7 @@ export default function AppContent() {
     const login = () => {
         setComponentToShow("login");
         setOpenDrawer(true)
+
     };
 
     const createProduct = () => {
