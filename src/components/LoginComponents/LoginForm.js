@@ -7,14 +7,11 @@ import {
     Paper,
     Group,
     Button,
-    Divider,
+
     Checkbox,
     Anchor,
     Stack,
 } from '@mantine/core';
-import {IconBrandFacebook, IconBrandGoogle} from "@tabler/icons-react";
-import {useGoogleLogin} from "@react-oauth/google";
-
 
 export default function LoginForm({ onLogin, onRegister }) {
     const [type, toggle] = useToggle(['login', 'register']);
@@ -36,10 +33,6 @@ export default function LoginForm({ onLogin, onRegister }) {
     });
 
 
-    const loginGoogle = useGoogleLogin({
-        onSuccess: tokenResponse => console.log(tokenResponse),
-    })
-
     const onSubmit = (event) => {
         event.preventDefault()
         if (type === 'login') {
@@ -56,20 +49,12 @@ export default function LoginForm({ onLogin, onRegister }) {
 
         <Paper radius="md" p="xl">
             <Text size="lg" weight={500} ta="center">
-                Welcome, {type} with
+                Welcome!
             </Text>
-
             <Group grow mb="md" mt="md">
-
-                <Button radius="xl" onClick={() => loginGoogle()}><IconBrandGoogle /></Button>
-                  <Button radius="xl"><IconBrandFacebook /></Button>
             </Group>
-
-            <Divider label={`Or continue with ${type}`} labelPosition="center" my="lg" />
-
             <form onSubmit={onSubmit}>
                 <Stack>
-
                     {type === 'register' && (
                         <>
                             <TextInput

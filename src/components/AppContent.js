@@ -147,7 +147,6 @@ export default function AppContent() {
                 <CreateProducts authToken={getAuthToken()} />
                 </Drawer>
             )}
-            {componentToShow === "main" && <p>It is main {authenticatedUserLogin}</p>}
             {componentToShow === "myproducts" && (
                 <Drawer opened={opened} position={"left"} onClose={() => setOpened(false)}
                         overlayProps={{ opacity: 0.5, blur: 1 }}

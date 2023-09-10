@@ -5,9 +5,9 @@ import './ListOfProducts.css'
 import { Table } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 
-import {Button, Dialog, Group, Pagination, rem, ScrollArea, Text, TextInput} from "@mantine/core";
+import {Button, Dialog, List, Pagination, rem, ScrollArea, Text, ThemeIcon} from "@mantine/core";
 import {useDisclosure} from "@mantine/hooks";
-import {IconMessage2} from "@tabler/icons-react";
+import {IconInfoCircle, IconMessage2} from "@tabler/icons-react";
 
 function ListOfProducts() {
     const [products, setProducts] = useState([]);
@@ -16,9 +16,6 @@ function ListOfProducts() {
     const itemsPerPage = 10;
     const [totalProductsCount, setTotalProductsCount] = useState(0);
     const [opened, { toggle, close }] = useDisclosure(false);
-    const [chatInfo,{ openChat, closeChat }] = useDisclosure(false);
-    const [tempDial, setTempDial] = useState('');
-    const [message, setMessage] = useState('');
 
     useEffect(() => {
         request('GET', `/products?page=${currentPage}&pageSize=${itemsPerPage}`, {})
@@ -40,12 +37,6 @@ function ListOfProducts() {
 
     };
 
-    const handleSendMessage = () => {
-        // Add the message to tempDial and reset the message input
-        setTempDial((prevDial) => prevDial + `\n${message}`);
-        setMessage('');
-    };
-
 
 
     useEffect(() => {
@@ -59,6 +50,7 @@ function ListOfProducts() {
     }, []);
 
     return (
+        <>
         <div className="row justify-content-md-center">
             <div className="card w-100">
                 <div className="card-body">
@@ -88,28 +80,33 @@ function ListOfProducts() {
                                 <td>${product.price}</td>
                                 <td>
                                     {product.user.firstName}
-
-                                    <Button compact onClick={toggle} rightIcon={<IconMessage2 />}
+                                    {localStorage.getItem('auth_token') !== 'null' && (
+                                        <div>
+                                    <Button compact onClick={toggle} rightIcon={<IconInfoCircle />}
                                             variant="white" size={rem(5)} />
-                                    <Dialog opened={opened} withCloseButton onClose={close} size="lg" radius="md" >
+                                    <Dialog opened={opened} withCloseButton onClose={close} >
                                         <Text size="sm" mb="xs" weight={500}>
-                                            Send a message to {product.user.firstName} as {localStorage.getItem("userLogin")}
+                                            CONTACT INFORMATION OF {product.user.firstName.toUpperCase()}
                                         </Text>
-                                        <ScrollArea h={200}>
-                                        <Text>
-                                            {tempDial}
-                                        </Text>
-                                        </ScrollArea>
-                                        <TextInput
-                                            placeholder="Send a message"
-                                            value={message}
-                                            onChange={(e) => setMessage(e.target.value)}
-                                            rightSection={
-                                                <Button onClick={handleSendMessage} rightIcon={<IconMessage2 />} />
-                                            }
-                                            ></TextInput>
-                                    </Dialog>
+                                        <ScrollArea h={40}>
+                                            <List
+                                                spacing="xs"
+                                                size="sm"
+                                                center
+                                                icon={
+                                                    <ThemeIcon color="teal" size={24} radius="xl">
+                                                        <IconMessage2 size="1rem" />
+                                                    </ThemeIcon>
+                                                }
+                                            >
+                                                <List.Item>EMAIL: {product.user.email}</List.Item>
 
+                                            </List>
+                                        </ScrollArea>
+
+                                    </Dialog>
+                                        </div>
+                                )}
                                 </td>
                                 <td>{new Date(product.createdDate).toLocaleDateString()}</td>
                             </tr>
@@ -135,7 +132,9 @@ function ListOfProducts() {
             </div>
 
         </div>
-    );
+</>
+);
+
 }
 
 export default ListOfProducts;
