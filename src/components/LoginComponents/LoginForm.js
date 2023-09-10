@@ -87,6 +87,7 @@ export default function LoginForm({ onLogin, onRegister }) {
                         radius="md"
                     />
 
+
                     <PasswordInput
                         required
                         label="Password"
