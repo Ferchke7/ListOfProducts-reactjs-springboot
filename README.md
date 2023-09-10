@@ -1,4 +1,4 @@
-BACKEND -> is [Link to jwt spring-boot]([https://github.com/Ferchke7/Springboot-Reactjs-ProductList](https://github.com/Ferchke7/jwtBackend)) 
+BACKEND -> is [Link to jwt spring-boot](https://github.com/Ferchke7/jwtBackend)
 
 This repository contains the source code for a ReactJS application with multiple components and functionality related to user authentication, registration, product listing, and more.
 Table of Contents
