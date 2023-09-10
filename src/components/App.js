@@ -6,7 +6,6 @@ import ListOfProducts from "./ListOfProducts";
 import {MantineProvider} from "@mantine/core";
 import {Notifications} from "@mantine/notifications";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {GoogleOAuthProvider} from "@react-oauth/google";
 
 
 
