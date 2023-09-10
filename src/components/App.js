@@ -14,7 +14,7 @@ import {GoogleOAuthProvider} from "@react-oauth/google";
 
 function App() {
     return (
-        <GoogleOAuthProvider clientId={"374318802758-60ujmcrejovugs9tokv7uba6bg8p0d7i.apps.googleusercontent.com"}>
+
         <MantineProvider withNormalizeCSS withGlobalStyles>
             <Notifications />
         <BrowserRouter>
@@ -24,7 +24,7 @@ function App() {
         </Routes>
         </BrowserRouter>
         </MantineProvider>
-        </GoogleOAuthProvider>
+
     );
 }
 
