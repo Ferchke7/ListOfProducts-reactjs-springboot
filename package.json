@@ -41,6 +41,9 @@
     "react-scripts": "5.0.1",
     "reactjs-social-login": "^2.6.3",
     "sass": "^1.64.2",
+    "socket.io-client": "^4.7.2",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "url": "^0.11.1",
     "web-vitals": "^2.1.4"
   },
