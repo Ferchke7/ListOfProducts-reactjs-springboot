@@ -13,6 +13,7 @@ function UsersProduct({ userId }) {
 
     useEffect(() => {
         if (userId !== null) {
+
             request("GET", `/myproducts/${userId}`)
                 .then((response) => {
                     setProducts(response.data);
