@@ -15,7 +15,7 @@ Table of Contents
 
 Introduction
 
-This application is a simple e-commerce platform that allows users to browse and purchase products. It is built using ReactJS, a JavaScript library for building user interfaces.
+This application is a simple platform that allows users to browse and purchase products. It is built using ReactJS, a JavaScript library for building user interfaces.
 
 The application has the following features:
 
